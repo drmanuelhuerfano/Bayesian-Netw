@@ -1,0 +1,38 @@
+network Glomerulopatia {
+}
+
+variable Proteinuria {
+    type discrete [ 2 ] { No, Si };
+}
+
+variable Hematuria {
+    type discrete [ 2 ] { No, Si };
+}
+
+variable Creatinina {
+    type discrete [ 2 ] { Normal, Elevada };
+}
+
+variable Diagnóstico_Glomerulopatía {
+    type discrete [ 2 ] { No, Si };
+}
+
+probability ( Proteinuria ) {
+    table 0.15, 0.85;
+}
+
+probability ( Hematuria ) {
+    table 0.3, 0.7;
+}
+
+probability ( Creatinina | Proteinuria, Hematuria ) {
+    ( No, No ) 0.8, 0.2;
+    ( No, Si ) 0.6, 0.4;
+    ( Si, No ) 0.4, 0.6;
+    ( Si, Si ) 0.2, 0.8;
+}
+
+probability ( Diagnóstico_Glomerulopatía | Creatinina ) {
+    ( Normal ) 0.1, 0.9;
+    ( Elevada ) 0.9, 0.1;
+}
