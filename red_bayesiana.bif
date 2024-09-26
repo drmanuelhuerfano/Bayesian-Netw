@@ -1,20 +1,26 @@
 network unknown {
 }
+
 variable Creatinina {
     type discrete [ 2 ] { 0, 1 };
 }
+
 variable Diagnóstico Glomerulopatía {
     type discrete [ 2 ] { 0, 1 };
 }
+
 variable Hematuria {
     type discrete [ 2 ] { 0, 1 };
 }
+
 variable Hipertensión {
     type discrete [ 2 ] { 0, 1 };
 }
+
 variable Proteinuria {
     type discrete [ 2 ] { 0, 1 };
 }
+
 probability ( Creatinina | Proteinuria, Hematuria, Hipertensión ) {
     ( 0, 0, 0 ) 0.35, 0.65;
     ( 0, 0, 1 ) 0.35, 0.65;
@@ -24,19 +30,22 @@ probability ( Creatinina | Proteinuria, Hematuria, Hipertensión ) {
     ( 1, 0, 1 ) 0.35, 0.65;
     ( 1, 1, 0 ) 0.35, 0.65;
     ( 1, 1, 1 ) 0.35, 0.65;
-
 }
+
 probability ( Diagnóstico Glomerulopatía | Creatinina ) {
     ( 0 ) 0.2, 0.8;
     ( 1 ) 0.8, 0.2;
+}
 
-}
 probability ( Hematuria ) {
-    table 0.3, 0.7 ;
+    table 0.3, 0.7;
 }
+
 probability ( Hipertensión ) {
-    table 0.4, 0.6 ;
+    table 0.4, 0.6;
 }
+
 probability ( Proteinuria ) {
-    table 0.15, 0.85 ;
+    table 0.15, 0.85;
 }
+
