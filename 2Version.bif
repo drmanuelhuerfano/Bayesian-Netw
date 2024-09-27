@@ -25,14 +25,20 @@ probability ( Hematuria ) {
     table 0.3, 0.7;
 }
 
-probability ( Creatinina | Proteinuria, Hematuria ) {
-    ( No, No ) 0.8, 0.2;
-    ( No, Si ) 0.6, 0.4;
-    ( Si, No ) 0.4, 0.6;
-    ( Si, Si ) 0.2, 0.8;
+probability ( Creatinina ) {
+    table 0.65, 0.35;
 }
 
-probability ( Diagnóstico_Glomerulopatía | Creatinina ) {
-    ( Normal ) 0.1, 0.9;
-    ( Elevada ) 0.9, 0.1;
+probability ( Diagnóstico_Glomerulopatía | Proteinuria, Hematuria, Creatinina ) {
+    ( No, No, Normal ) 0.99, 0.01;  # Base case: no factors present
+    ( No, No, Elevada ) 0.5, 0.5;   # Creatinine elevated alone increases risk to 50%
+    
+    ( No, Si, Normal ) 0.3, 0.7;    # Hematuria alone increases risk to 70%
+    ( No, Si, Elevada ) 0.1, 0.9;   # Hematuria and elevated creatinine together increase risk to 90%
+    
+    ( Si, No, Normal ) 0.3, 0.7;    # Proteinuria alone increases risk to 70%
+    ( Si, No, Elevada ) 0.1, 0.9;   # Proteinuria and elevated creatinine together increase risk to 90%
+    
+    ( Si, Si, Normal ) 0.1, 0.9;    # Both Hematuria and Proteinuria together increase risk to 90%
+    ( Si, Si, Elevada ) 0.02, 0.98; # All three factors together increase risk to 98%
 }
